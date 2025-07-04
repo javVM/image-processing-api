@@ -4,6 +4,8 @@
   "description": "RESTful API for generating images in multiple resolutions from a single source image.",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"**/*.{ts,js,json}\"",
     "lint": "eslint . --ext .ts,.js"
@@ -19,10 +21,20 @@
     "url": "https://github.com/javVM/image-processing-api/issues"
   },
   "homepage": "https://github.com/javVM/image-processing-api#readme",
+  "dependencies": {
+    "express": "5.1.0",
+    "lodash": "4.17.21",
+    "mongoose": "8.16.1"
+  },
   "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/lodash": "^4.17.20",
+    "@types/node": "^24.0.10",
     "eslint": "^9.30.1",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
