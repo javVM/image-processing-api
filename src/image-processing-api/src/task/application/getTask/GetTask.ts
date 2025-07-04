@@ -6,11 +6,9 @@ export class GetTask {
 
   async execute(taskId: string): Promise<Task> {
     const task = await this.repository.getTask(taskId);
-
     if (!task) {
       throw new Error(`Task with id ${taskId} not found`);
     }
-
     return task;
   }
 }
