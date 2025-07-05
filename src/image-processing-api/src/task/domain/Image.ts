@@ -8,4 +8,11 @@ export class Image {
     this.path = path;
     this.resolution = resolution;
   }
+
+  public getValue() {
+    return {
+      resolution: this.resolution,
+      path: this.path.value,
+    };
+  }
 }
