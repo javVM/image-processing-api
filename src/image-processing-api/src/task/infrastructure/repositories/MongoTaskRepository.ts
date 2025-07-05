@@ -1,10 +1,10 @@
 import { FlattenMaps } from "mongoose";
-import { Image } from "../../domain/Image";
-import { ImagePath } from "../../domain/ImagePath";
-import { Price } from "../../domain/Price";
-import { Task } from "../../domain/Task";
-import { TaskRepository } from "../../domain/TaskRepository";
-import { Status } from "../../domain/Status";
+import { Image } from "../../domain/entities/Image";
+import { ImagePath } from "../../domain/entities/ImagePath";
+import { Price } from "../../domain/entities/Price";
+import { Task } from "../../domain/entities/Task";
+import { TaskRepository } from "../../domain/repositories/TaskRepository";
+import { Status } from "../../domain/entities/Status";
 import { ImageDocument } from "../database/mongo/ImageModel";
 import { TaskModel } from "../database/mongo/TaskModel";
 import * as _ from "lodash";

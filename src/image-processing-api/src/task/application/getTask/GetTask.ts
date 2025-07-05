@@ -1,5 +1,5 @@
-import { Task } from "../../domain/Task";
-import { TaskRepository } from "../../domain/TaskRepository";
+import { Task } from "../../domain/entities/Task";
+import { TaskRepository } from "../../domain/repositories/TaskRepository";
 
 export class GetTask {
   constructor(private repository: TaskRepository) {}
