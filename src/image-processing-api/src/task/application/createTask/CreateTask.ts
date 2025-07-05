@@ -1,6 +1,6 @@
-import { ImagePath } from "../../domain/ImagePath";
-import { Task } from "../../domain/Task";
-import { TaskRepository } from "../../domain/TaskRepository";
+import { ImagePath } from "../../domain/entities/ImagePath";
+import { Task } from "../../domain/entities/Task";
+import { TaskRepository } from "../../domain/repositories/TaskRepository";
 
 export class CreateTask {
   constructor(private repository: TaskRepository) {}
