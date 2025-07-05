@@ -1,5 +1,5 @@
-import { ImagePath } from "./ImagePath";
-import { Task } from "./Task";
+import { ImagePath } from "../entities/ImagePath";
+import { Task } from "../entities/Task";
 
 export interface TaskRepository {
   createTask(path: ImagePath): Promise<Task>;
