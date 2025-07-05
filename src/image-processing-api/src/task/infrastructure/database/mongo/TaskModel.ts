@@ -1,9 +1,10 @@
+import { ImageDocument } from "./ImageModel";
+import "./ImageModel";
 import { Schema, Document, Types, model } from "mongoose";
 import { Status } from "../../../domain/Status";
-import { ImageDocument } from "./ImageModel";
 
 interface TaskDocument extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   status: Status;
   price: number;
   originalPath: string;

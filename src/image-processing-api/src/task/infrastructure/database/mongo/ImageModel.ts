@@ -1,7 +1,7 @@
-import { Schema, Document, model } from "mongoose";
+import { Schema, Document, model, Types } from "mongoose";
 
 export interface ImageDocument extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   path: string;
   resolution: string;
   md5: string;
