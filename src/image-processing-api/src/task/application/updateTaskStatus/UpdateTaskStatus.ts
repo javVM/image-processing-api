@@ -1,15 +1,12 @@
+import { Status } from "../../domain/entities/Status";
 import { Task } from "../../domain/entities/Task";
 import { TaskNotFoundError } from "../../domain/errors/TaskNotFoundError";
 import { TaskRepository } from "../../domain/repositories/TaskRepository";
 
-export class GetTask {
+export class UpdateTaskStatus {
   constructor(private repository: TaskRepository) {}
 
-  async execute(taskId: string): Promise<Task> {
-    const task = await this.repository.getTask(taskId);
-    if (!task) {
-      throw new TaskNotFoundError(taskId);
-    }
-    return task;
+  async execute(taskId: string, status: Status): Promise<void> {
+    await this.repository.updateTaskStatus(taskId, status);
   }
 }
