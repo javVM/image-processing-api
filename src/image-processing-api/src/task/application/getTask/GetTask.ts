@@ -1,4 +1,5 @@
 import { Task } from "../../domain/entities/Task";
+import { TaskNotFoundError } from "../../domain/errors/TaskNotFoundError";
 import { TaskRepository } from "../../domain/repositories/TaskRepository";
 
 export class GetTask {
@@ -7,7 +8,7 @@ export class GetTask {
   async execute(taskId: string): Promise<Task> {
     const task = await this.repository.getTask(taskId);
     if (!task) {
-      throw new Error(`Task with id ${taskId} not found`);
+      throw new TaskNotFoundError(taskId);
     }
     return task;
   }
