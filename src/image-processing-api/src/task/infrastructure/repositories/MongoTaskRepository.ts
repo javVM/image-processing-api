@@ -18,10 +18,10 @@ export class MongoTaskRepository implements TaskRepository {
   async createTask(path: ImagePath): Promise<Task> {
     try {
       const status = Status.PENDING;
-      const randomPrice = Price.random();
-      const newTask = new TaskModel({ status, originalPath: path.value, price: randomPrice.value });
+      const newPrice = new Price();
+      const newTask = new TaskModel({ status, originalPath: path.value, price: newPrice.value });
       const createdTask = await newTask.save();
-      return new Task(createdTask._id.toString(), createdTask.status as Status, new Price(createdTask.price));
+      return new Task(createdTask._id.toString(), createdTask.status as Status, newPrice);
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new TaskSaveError(error.message);
@@ -66,7 +66,11 @@ export class MongoTaskRepository implements TaskRepository {
       if (error instanceof Error) {
         throw new TaskStatusUpdateError(taskId, status, error.message);
       }
-      throw new TaskStatusUpdateError(taskId, status, `An unexpected error occurred while trying to update the task's status`);
+      throw new TaskStatusUpdateError(
+        taskId,
+        status,
+        `An unexpected error occurred while trying to update the task's status`
+      );
     }
   }
 }
