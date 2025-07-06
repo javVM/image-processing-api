@@ -1,4 +1,6 @@
 import path from "path";
+import { InvalidFileExtensionError } from "../errors/InvalidFileExtensionError";
+import { NoFileSelectedError } from "../errors/NoFileSelectedError";
 
 export class ImagePath {
   private readonly allowedExtensions = [".jpg", ".jpeg", ".png"];
@@ -11,12 +13,12 @@ export class ImagePath {
 
   private checkIsValid(value: string) {
     if (!value) {
-      throw new Error("No file selected");
+      throw new NoFileSelectedError();
     }
 
     const fileExtension = path.extname(value);
     if (!this.allowedExtensions.includes(fileExtension)) {
-      throw new Error(`File extension not allowed. Allowed extensions: ${this.allowedExtensions.join(", ")}`);
+      throw new InvalidFileExtensionError(this.allowedExtensions);
     }
   }
 }

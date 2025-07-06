@@ -1,3 +1,5 @@
+import { InvalidPriceError } from "../errors/InvalidPriceError";
+
 export class Price {
   private static minimumValue = 5;
   private static maximumValue = 50;
@@ -10,7 +12,7 @@ export class Price {
 
   private static checkIsValid(value: number) {
     if (value < this.minimumValue || value > this.maximumValue) {
-      throw new Error(`Price must be between ${this.minimumValue} and ${this.maximumValue}`);
+      throw new InvalidPriceError(this.minimumValue, this.maximumValue);
     }
   }
 
