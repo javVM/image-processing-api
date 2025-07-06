@@ -23,7 +23,7 @@ afterAll(async () => {
   await closeDatabase();
   if (process.env.OUTPUT_DIR) {
     const fullOutputDir = path.join(process.cwd(), process.env.OUTPUT_DIR);
-    //clearOutputDir(fullOutputDir);
+    clearOutputDir(fullOutputDir);
   }
 });
 
