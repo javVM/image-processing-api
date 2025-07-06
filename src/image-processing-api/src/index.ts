@@ -11,10 +11,15 @@ app.use("/tasks", TaskRouter);
 app.use(errorHandler);
 
 async function bootstrap() {
-  await connectToDatabase();
-  app.listen(process.env.PORT, () => {
-    console.log(`Image processing API is running on port ${process.env.PORT}`);
-  });
+  try {
+    await connectToDatabase();
+    app.listen(process.env.PORT, () => {
+      console.log(`Image processing API is running on port ${process.env.PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start the server:", error);
+    process.exit(1);
+  }
 }
 
 bootstrap();
