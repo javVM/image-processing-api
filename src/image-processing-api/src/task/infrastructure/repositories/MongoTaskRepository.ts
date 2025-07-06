@@ -64,9 +64,9 @@ export class MongoTaskRepository implements TaskRepository {
       await TaskModel.findByIdAndUpdate(taskId, { status });
     } catch (error) {
       if (error instanceof Error) {
-        throw new TaskStatusUpdateError(taskId, error.message);
+        throw new TaskStatusUpdateError(taskId, status, error.message);
       }
-      throw new TaskStatusUpdateError(taskId, `An unexpected error occurred while trying to update the task's status`);
+      throw new TaskStatusUpdateError(taskId, status, `An unexpected error occurred while trying to update the task's status`);
     }
   }
 }
