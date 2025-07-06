@@ -58,7 +58,7 @@ TaskRouter.post("/", createTask);
  * @swagger
  * /tasks/{taskId}:
  *   get:
- *     summary: Get a task by ID
+ *     summary: Get a task by taskId
  *     tags: [Tasks]
  *     parameters:
  *       - in: path
@@ -67,7 +67,7 @@ TaskRouter.post("/", createTask);
  *         required: true
  *         schema:
  *           type: string
- *         description: The task ID
+ *         description: The taskId
  *     responses:
  *       200:
  *         description: Task retrieved successfully
