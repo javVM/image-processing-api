@@ -1,5 +1,7 @@
+import path from "path";
+
 export class ImagePath {
-  private readonly allowedExtensions = ["jpg", "jpeg", "png"];
+  private readonly allowedExtensions = [".jpg", ".jpeg", ".png"];
   value: string;
 
   constructor(value: string) {
@@ -11,8 +13,8 @@ export class ImagePath {
     if (!value) {
       throw new Error("No file selected");
     }
-    const separator = ".";
-    const fileExtension = value.split(separator).pop() ?? "";
+
+    const fileExtension = path.extname(value);
     if (!this.allowedExtensions.includes(fileExtension)) {
       throw new Error(`File extension not allowed. Allowed extensions: ${this.allowedExtensions.join(", ")}`);
     }
