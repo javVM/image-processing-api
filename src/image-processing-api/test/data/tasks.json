@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "686a5943ca86e76f9fef21bd",
+    "status": "pending",
+    "price": 11,
+    "originalPath": "https://imageExample.jpg"
+  },
+  {
+    "_id": "686a5943ca86e76f9fef21be",
+    "status": "failed",
+    "price": 15,
+    "originalPath": "https://imageExample.jpg"
+  },
+  {
+    "_id": "686a5943ca86e76f9fef21bf",
+    "status": "completed",
+    "price": 15,
+    "originalPath": "/input/image1.png",
+    "images": ["686ae712faf947c3d2a36f9f", "686ae74d981e566cc6ee9e90"]
+  }
+]
