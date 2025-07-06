@@ -6,6 +6,7 @@ export const createTask = async (req: Request, res: Response) => {
     const originalPath = req.body.path;
     const task = await ServiceContainer.createTask.execute(originalPath);
     const structuredTask = task.getValue();
+    ServiceContainer.generateTaskImages.execute(structuredTask.taskId, originalPath);
     res.status(201).json(structuredTask);
   } catch (error: unknown) {
     if (error instanceof Error) {
