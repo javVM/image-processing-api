@@ -13,7 +13,7 @@ const ImageSchema = new Schema<ImageDocument>(
     resolution: { type: String, required: true },
     md5: { type: String, required: true },
   },
-  { timestamps: true }
+  { timestamps: { createdAt: true, updatedAt: false } }
 );
 
 export const ImageModel = model<ImageDocument>("Image", ImageSchema);
