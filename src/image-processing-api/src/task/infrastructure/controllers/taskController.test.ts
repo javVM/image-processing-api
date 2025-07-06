@@ -115,10 +115,10 @@ describe("Get populated task", () => {
 });
 
 describe("Create and get task", () => {
-  it("Create and get PENDING task", async () => {
+  it("Create and get PENDING task (local)", async () => {
     const createResponse = await request(app)
       .post("/tasks")
-      .send({ path: "/input/image1.png" })
+      .send({ path: "/test/input/landscape.png" })
       .expect("Content-Type", /json/)
       .expect(201);
     const createdTaskId = createResponse.body.taskId;
@@ -141,12 +141,10 @@ describe("Create and get task", () => {
     expect(getResponse.body).not.toHaveProperty("images");
   });
 
-  it(
-    "Create and get FAILED task",
-    async () => {
+  it("Create and get FAILED task (local)", async () => {
       const createResponse = await request(app)
         .post("/tasks")
-        .send({ path: "/test/image_failed.png" })
+        .send({ path: "/test/input/image_failed.png" })
         .expect("Content-Type", /json/)
         .expect(201);
       const createdTaskId = createResponse.body.taskId;
@@ -173,12 +171,104 @@ describe("Create and get task", () => {
     TEST_TIMEOUT_MS
   );
 
-  it(
-    "Create and get COMPLETED task",
+  it("Create and get COMPLETED task (local)",
     async () => {
       const createResponse = await request(app)
         .post("/tasks")
-        .send({ path: "/input/image1.png" })
+        .send({ path: "/test/input/landscape.png" })
+        .expect("Content-Type", /json/)
+        .expect(201);
+      const createdTaskId = createResponse.body.taskId;
+      expect(createResponse.body).toHaveProperty("taskId");
+      expect(typeof createdTaskId).toBe("string");
+      expect(createResponse.body).toHaveProperty("status");
+      expect(createResponse.body.status).toBe(Status.PENDING);
+      expect(createResponse.body).toHaveProperty("price");
+      expect(typeof createResponse.body.price).toBe("number");
+      expect(createResponse.body.price).toBeGreaterThanOrEqual(5);
+      expect(createResponse.body.price).toBeLessThanOrEqual(50);
+      expect(createResponse.body).not.toHaveProperty("images");
+
+      await new Promise(resolve => setTimeout(resolve, WAIT_TIME_MS));
+
+      const getResponse = await request(app).get(`/tasks/${createdTaskId}`).expect("Content-Type", /json/).expect(200);
+      expect(getResponse.body).toHaveProperty("taskId");
+      expect(getResponse.body.taskId).toBe(createdTaskId);
+      expect(getResponse.body).toHaveProperty("price");
+      expect(getResponse.body).toHaveProperty("status");
+      expect(getResponse.body.status).toBe(Status.COMPLETED);
+      expect(getResponse.body).toHaveProperty("images");
+      getResponse.body.images.forEach((image: Image) => {
+        expect(image).toHaveProperty("path");
+        expect(typeof image.path).toBe("string");
+        expect(image).toHaveProperty("resolution");
+        expect(typeof image.resolution).toBe("string");
+      });
+    },
+    TEST_TIMEOUT_MS
+  );
+
+    it("Create and get PENDING task (url)", async () => {
+    const createResponse = await request(app)
+      .post("/tasks")
+      .send({ path: "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" })
+      .expect("Content-Type", /json/)
+      .expect(201);
+    const createdTaskId = createResponse.body.taskId;
+    expect(createResponse.body).toHaveProperty("taskId");
+    expect(typeof createdTaskId).toBe("string");
+    expect(createResponse.body).toHaveProperty("status");
+    expect(createResponse.body.status).toBe(Status.PENDING);
+    expect(createResponse.body).toHaveProperty("price");
+    expect(typeof createResponse.body.price).toBe("number");
+    expect(createResponse.body.price).toBeGreaterThanOrEqual(5);
+    expect(createResponse.body.price).toBeLessThanOrEqual(50);
+    expect(createResponse.body).not.toHaveProperty("images");
+
+    const getResponse = await request(app).get(`/tasks/${createdTaskId}`).expect("Content-Type", /json/).expect(200);
+    expect(getResponse.body).toHaveProperty("taskId");
+    expect(getResponse.body.taskId).toBe(createdTaskId);
+    expect(getResponse.body).toHaveProperty("price");
+    expect(getResponse.body).toHaveProperty("status");
+    expect(getResponse.body.status).toBe(Status.PENDING);
+    expect(getResponse.body).not.toHaveProperty("images");
+  });
+
+  it("Create and get FAILED task (url)", async () => {
+      const createResponse = await request(app)
+        .post("/tasks")
+        .send({ path: "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_random_image_1.png" })
+        .expect("Content-Type", /json/)
+        .expect(201);
+      const createdTaskId = createResponse.body.taskId;
+      expect(createResponse.body).toHaveProperty("taskId");
+      expect(typeof createdTaskId).toBe("string");
+      expect(createResponse.body).toHaveProperty("status");
+      expect(createResponse.body.status).toBe(Status.PENDING);
+      expect(createResponse.body).toHaveProperty("price");
+      expect(typeof createResponse.body.price).toBe("number");
+      expect(createResponse.body.price).toBeGreaterThanOrEqual(5);
+      expect(createResponse.body.price).toBeLessThanOrEqual(50);
+      expect(createResponse.body).not.toHaveProperty("images");
+
+      await new Promise(resolve => setTimeout(resolve, WAIT_TIME_MS));
+
+      const getResponse = await request(app).get(`/tasks/${createdTaskId}`).expect("Content-Type", /json/).expect(200);
+      expect(getResponse.body).toHaveProperty("taskId");
+      expect(getResponse.body.taskId).toBe(createdTaskId);
+      expect(getResponse.body).toHaveProperty("price");
+      expect(getResponse.body).toHaveProperty("status");
+      expect(getResponse.body.status).toBe(Status.FAILED);
+      expect(getResponse.body).not.toHaveProperty("images");
+    },
+    TEST_TIMEOUT_MS
+  );
+
+  it("Create and get COMPLETED task (url)",
+    async () => {
+      const createResponse = await request(app)
+        .post("/tasks")
+        .send({ path: "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" })
         .expect("Content-Type", /json/)
         .expect(201);
       const createdTaskId = createResponse.body.taskId;
