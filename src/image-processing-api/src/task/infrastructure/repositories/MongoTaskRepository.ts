@@ -11,6 +11,7 @@ import * as _ from "lodash";
 import { TaskSaveError } from "../errors/TaskSaveError";
 import { TaskRetrievalError } from "../errors/TaskRetrievalError";
 import { TaskStatusUpdateError } from "../errors/TaskStatusUpdate";
+import { Types } from "mongoose";
 
 export class MongoTaskRepository implements TaskRepository {
   constructor() {}
@@ -32,6 +33,9 @@ export class MongoTaskRepository implements TaskRepository {
 
   async getTask(taskId: string): Promise<Task | null> {
     try {
+      if (!Types.ObjectId.isValid(taskId)) {
+        return null;
+      }
       const imagesProperty = "images";
       const populateFields = "resolution path";
       const foundTask = await TaskModel.findOne({ _id: taskId }).populate(imagesProperty, populateFields).lean().exec();
