@@ -34,7 +34,7 @@ describe("CreateTask Use case", () => {
     const createTask = new CreateTask(repository);
     await expect(createTask.execute("")).rejects.toThrow("No file path provided.");
     await expect(createTask.execute(`${filePath}.bmp`)).rejects.toThrow(
-      "File extension not allowed. Allowed extensions: .jpg, .jpeg, .png."
+      "File extension not allowed. Allowed extensions: .jpg, .jpeg, .png, .webp, .svg, .gif."
     );
   });
 });
