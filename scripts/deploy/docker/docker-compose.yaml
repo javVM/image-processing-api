@@ -3,10 +3,11 @@ version: "3.8"
 services:
   image-processing-api:
     image: image-processing-api:latest
-    restart: always
     container_name: image-processing-api
     ports:
       - "3000:3000"
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo:8.0.11-noble
     restart: always

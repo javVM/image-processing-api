@@ -1,0 +1,15 @@
+[
+  {
+    "_id": "686b01ff3f2ed6fb5bb2ad24",
+    "status": "completed",
+    "price": 48,
+    "originalPath": "/input/landscape.png",
+    "images": ["686b01ff3f2ed6fb5bb2ad26", "686b01ff3f2ed6fb5bb2ad27"]
+  },
+  {
+    "_id": "686b01ff3f2ed6fb5bb2ad25",
+    "status": "failed",
+    "price": 50,
+    "originalPath": "/input/landscape_failed.png"
+  }
+]
