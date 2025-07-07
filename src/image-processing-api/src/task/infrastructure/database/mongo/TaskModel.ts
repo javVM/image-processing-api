@@ -18,7 +18,7 @@ const TaskSchema = new Schema<TaskDocument>(
     originalPath: { type: String, required: true },
     images: { type: [{ type: Schema.Types.ObjectId, ref: "Image" }], default: [] },
   },
-  { timestamps: true }
+  {  versionKey: false, timestamps: true }
 );
 
 export const TaskModel = model<TaskDocument>("Task", TaskSchema);
