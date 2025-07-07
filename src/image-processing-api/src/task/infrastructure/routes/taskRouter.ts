@@ -63,7 +63,7 @@ TaskRouter.post("/", createTask);
  *     parameters:
  *       - in: path
  *         name: taskId
- *         example: "686a6e8ccb00ef45aea7d7c8"
+ *         example: "686b01ff3f2ed6fb5bb2ad24"
  *         required: true
  *         schema:
  *           type: string
