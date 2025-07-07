@@ -20,9 +20,11 @@ describe("ImagePath Entity", () => {
   });
 
   test("Throw InvalidFileExtensionError when path has an invalid extension", () => {
-    expect(() => new ImagePath(`${fileName}.gif`)).toThrow(InvalidFileExtensionError);
+    expect(() => new ImagePath(`${fileName}.dat`)).toThrow(InvalidFileExtensionError);
     expect(() => new ImagePath(`${fileName}.pdf`)).toThrow(InvalidFileExtensionError);
+    expect(() => new ImagePath(`${fileName}.gif`)).not.toThrow(InvalidFileExtensionError);
     expect(() => new ImagePath(`${fileName}.png`)).not.toThrow(InvalidFileExtensionError);
+    expect(() => new ImagePath(`${fileName}.jpeg`)).not.toThrow(InvalidFileExtensionError);
     expect(() => new ImagePath(`${fileName}.jpg`)).not.toThrow(InvalidFileExtensionError);
   });
 });

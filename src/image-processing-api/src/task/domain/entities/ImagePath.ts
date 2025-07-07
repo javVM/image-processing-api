@@ -3,7 +3,7 @@ import { InvalidFileExtensionError } from "../errors/InvalidFileExtensionError";
 import { NoFileSelectedError } from "../errors/NoFileSelectedError";
 
 export class ImagePath {
-  private readonly allowedExtensions = [".jpg", ".jpeg", ".png"];
+  private readonly allowedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".svg", ".gif"];
   value: string;
 
   constructor(value: string) {
