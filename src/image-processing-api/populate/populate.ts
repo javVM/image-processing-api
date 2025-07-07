@@ -5,8 +5,8 @@ import { ImageModel } from "../src/task/infrastructure/database/mongo/ImageModel
 import path from "path";
 
 export function loadDataFromFiles() {
-  const images = require(path.join(process.cwd(), "/data/images.json"));
-  const tasks = require(path.join(process.cwd(), "/data/tasks.json"));
+  const images = require(path.join(process.cwd(), "/populate/data/images.json"));
+  const tasks = require(path.join(process.cwd(), "/populate/data/tasks.json"));
   return { images, tasks };
 }
 
