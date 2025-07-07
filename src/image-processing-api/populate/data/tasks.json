@@ -11,5 +11,11 @@
     "status": "failed",
     "price": 50,
     "originalPath": "/input/landscape_failed.png"
+  },
+    {
+    "_id": "686bdd83bb2033963d396e89",
+    "status": "pending",
+    "price": 50,
+    "originalPath": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Colorado_Scenic_View.jpg/640px-Colorado_Scenic_View.jpg"
   }
 ]
