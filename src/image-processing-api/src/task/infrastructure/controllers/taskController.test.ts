@@ -59,9 +59,11 @@ describe("Create task", () => {
   });
 
   it("Invalid file extension (400)", async () => {
-    const response = await request(app).post("/tasks").send({ path: "test/path/to/image.gif" }).expect(400);
+    const response = await request(app).post("/tasks").send({ path: "test/path/to/image.pdf" }).expect(400);
     expect(response.body).toHaveProperty("message");
-    expect(response.body.message).toBe("File extension not allowed. Allowed extensions: .jpg, .jpeg, .png.");
+    expect(response.body.message).toBe(
+      "File extension not allowed. Allowed extensions: .jpg, .jpeg, .png, .webp, .svg, .gif."
+    );
   });
 });
 

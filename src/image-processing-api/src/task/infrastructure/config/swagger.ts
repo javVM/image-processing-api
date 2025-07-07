@@ -89,7 +89,7 @@ const TaskSwaggerOptions: SwaggerOptions = {
           properties: {
             message: {
               type: "string",
-              example: "File extension not allowed. Allowed extensions: .jpg, .jpeg, .png.",
+              example: "File extension not allowed. Allowed extensions: .jpg, .jpeg, .png, .webp, .svg, .gif.",
             },
           },
           required: ["message"],

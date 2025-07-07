@@ -10,6 +10,11 @@ import { ImageGenerationError } from "../errors/ImageGenerationError";
 
 export class SharpImageGenerator implements ImageGenerator {
   private availableWidths = [1024, 800];
+  // Some formats cannot be stored with the same extension after being transformed
+  private extensionTransformationMap: { [key: string]: string } = {
+    gif: "png",
+    svg: "png",
+  };
 
   constructor() {}
 
@@ -30,7 +35,10 @@ export class SharpImageGenerator implements ImageGenerator {
       const outputDir = process.env.OUTPUT_DIR ?? "/output";
       const originalPathValue = originalPath.value;
       const fileNameWithExtension = path.basename(originalPath.value);
-      const extension = path.extname(fileNameWithExtension).slice(1);
+      let extension = path.extname(fileNameWithExtension).slice(1);
+      if (this.extensionTransformationMap[extension]) {
+        extension = this.extensionTransformationMap[extension];
+      }
       const fileName = path.basename(fileNameWithExtension, `.${extension}`);
       const imageBuffer = this.isURL(originalPathValue)
         ? await this.downloadImage(originalPathValue)
