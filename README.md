@@ -39,6 +39,7 @@ Start MongoDB container:
 ```bash
 cd scripts/deploy/local
 docker-compose up -d
+npm start # (or npm run dev if in development mode)
 ```
 #### 🐳 Run Fully in Docker
 Start MongoDB and API containers:
@@ -51,7 +52,7 @@ docker-compose up -d
 Ensure MongoDB is running, then run:
 ```bash
 cd src/image-processing-api
-npm run populate
+npm run populate # (or npm run populate-dev if in development mode)
 ```
 
 ## ✅ Testing
