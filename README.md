@@ -234,7 +234,7 @@ Only the default index on _id has been created in the MongoDB collections. This 
 
 Additional indexing on other fields such as status or price was considered unnecessary because the read/write patterns do not involve filtering or sorting on those fields.
 
-Introducing more indexes would increase the overhead during writes and updates, as each index must be maintained—ultimately negatively impacting performance in a write-heavy or batch-processing environment like this one.
+Introducing more indexes would increase the overhead during writes and updates, as each index must be maintained (negatively impacting performance in a write-heavy or batch-processing environment like this one).
 #### 🐳 Docker & Environment Separation
 The application supports multiple environments using Docker Compose:
 * **Local development:** API runs on the host machine; MongoDB runs in a container
