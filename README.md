@@ -204,7 +204,7 @@ Creates a new image-processing task.
   {
     "path": "https://exampleurl.png"
   }
-  ``
+  ```
 - **✅ Response (200 OK)**
     ```json
     {
