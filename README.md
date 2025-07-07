@@ -3,6 +3,36 @@ A RESTful API for generating images in multiple resolutions from a single source
 
 ## 📐 Architecture
 This project follows a Hexagonal Architecture pattern to ensure maintainability, testability, and scalability:
+
+#### 📁 Project Structure Overview
+**scripts/deploy:** Contains Docker Compose configurations for running the application and services in different environments.
+**src/image-processing-api/:** Main application root. It has the following structure:
+* **data/:** Contains the files with the data to populate
+* **dist/:** Compiled JS output after running npm run build.
+* **input/:** Source directory where input images are uploaded.
+* **output/:** Stores generated images at different resolutions.
+* **populate/:** Contains CLI scripts used to populate the database.
+* **src/:** Actual source code implementing the hexagonal architecture.
+* **test/:** High-level or end-to-end tests (outside of unit test directories)
+```bash
+project-root/
+├── scripts/
+│   └── deploy/
+│       ├── docker/
+│       ├── docker-compose.yaml
+│       ├── local/
+│       └── docker-compose.yaml
+└── src/
+    └── image-processing-api/
+        ├── data/
+        ├── dist/
+        ├── input/
+        ├── output/
+        ├── populate/
+        ├── src/
+        └── test/
+```
+
 #### 📂 Domain Layer
 The domain logic is organized as follows in order to ensure that it remains independent of infrastructure concerns:
 * **entities:** Contains core domain objects and their business logic
