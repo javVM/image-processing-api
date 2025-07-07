@@ -76,6 +76,7 @@ This project follows a Hexagonal Architecture pattern to ensure maintainability,
 **src/image-processing-api/:** Main application root. It has the following structure:
 * **data/:** Contains the files with the data to populate
 * **dist/:** Compiled JS output after running npm run build.
+* **docs/:** Contains documentation files such as Postman collection.
 * **input/:** Source directory where input images are uploaded.
 * **output/:** Stores generated images at different resolutions.
 * **populate/:** Contains CLI scripts used to populate the database.
@@ -93,6 +94,7 @@ project-root/
     └── image-processing-api/
         ├── data/
         ├── dist/
+        ├── docs/      
         ├── input/
         ├── output/
         ├── populate/
@@ -244,6 +246,10 @@ This ensures the app can run reliably in different pipelines or OS environments.
 The API is fully documented using Swagger, auto-generated from JSDoc-style annotations. This provides:
 * Clear, interactive API reference
 * Schema validation and response structure transparency
+#### 📬 Postman Collection
+A Postman collection is available to help you explore and test the API endpoints.
+You can find the collection in the [`docs/postman`](docs/postman) folder.
+Import the JSON file into Postman or any compatible tool to get started quickly.
 #### 🖼️ Image Generation with Sharp
 Image processing is handled using Sharp. Sharp was chosen for:
 * Native support for multiple image formats

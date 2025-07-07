@@ -1,0 +1,594 @@
+{
+	"info": {
+		"_postman_id": "8bc1f68e-7732-4dd4-abe6-cf6b6c3a3a08",
+		"name": "image-processing-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create",
+			"item": [
+				{
+					"name": "Success",
+					"item": [
+						{
+							"name": "Create task (url)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"taskId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"status\");\r",
+											"    pm.expect(jsonData).to.have.property(\"price\");\r",
+											"});\r",
+											"pm.test(\"Status is pending\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"pending\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"path\": \"https://upload.wikimedia.org/wikipedia/commons/4/43/Mountain_icon.svg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/tasks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create task (path)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"taskId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"status\");\r",
+											"    pm.expect(jsonData).to.have.property(\"price\");\r",
+											"});\r",
+											"pm.test(\"Status is pending\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"pending\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"path\": \"/input/landscape.png\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/tasks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Error",
+					"item": [
+						{
+							"name": "Create task (400 Bad request - FileNotSelectedError)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has message\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"message\");\r",
+											"});\r",
+											"pm.test(\"Response has correct message\", function () {\r",
+											"    pm.expect(jsonData.message).to.eql(`No file path provided.`);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"path\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/tasks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create task (400 Bad request - InvalidFileExtensionError)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has message\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"message\");\r",
+											"});\r",
+											"pm.test(\"Response has correct message\", function () {\r",
+											"    pm.expect(jsonData.message).to.eql(`File extension not allowed. Allowed extensions: .jpg, .jpeg, .png, .webp, .svg, .gif.`);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"path\": \"/input/landscape.pdf\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/tasks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get",
+			"item": [
+				{
+					"name": "Success",
+					"item": [
+						{
+							"name": "Get COMPLETED task (200 OK)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"taskId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"status\");\r",
+											"    pm.expect(jsonData).to.have.property(\"price\");\r",
+											"    pm.expect(jsonData).to.have.property(\"images\");\r",
+											"});\r",
+											"pm.test(\"Status is completed\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"completed\");\r",
+											"});\r",
+											"pm.test(\"Images array has 2 elements\", function () {\r",
+											"    pm.expect(jsonData.images.length).to.eql(2);\r",
+											"});\r",
+											"pm.test(\"Images have correct format\", function () {\r",
+											"    jsonData.images.forEach(image => {\r",
+											"        pm.expect(image).to.have.property(\"resolution\");\r",
+											"        pm.expect(image).to.have.property(\"path\");\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/tasks/:taskId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks",
+										":taskId"
+									],
+									"variable": [
+										{
+											"key": "taskId",
+											"value": "686b01ff3f2ed6fb5bb2ad24"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get PENDING task (200 OK)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"taskId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"status\");\r",
+											"    pm.expect(jsonData).to.have.property(\"price\");\r",
+											"});\r",
+											"pm.test(\"Status is pending\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"pending\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/tasks/:taskId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks",
+										":taskId"
+									],
+									"variable": [
+										{
+											"key": "taskId",
+											"value": "686bdd83bb2033963d396e89"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get FAILED task (200 OK)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has required fields\", function () {\r",
+											"    pm.expect(jsonData).to.have.property(\"taskId\");\r",
+											"    pm.expect(jsonData).to.have.property(\"status\");\r",
+											"    pm.expect(jsonData).to.have.property(\"price\");\r",
+											"});\r",
+											"pm.test(\"Status is failed\", function () {\r",
+											"    pm.expect(jsonData.status).to.eql(\"failed\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/tasks/:taskId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks",
+										":taskId"
+									],
+									"variable": [
+										{
+											"key": "taskId",
+											"value": "686b01ff3f2ed6fb5bb2ad25"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Error",
+					"item": [
+						{
+							"name": "Get task (404 Not Found)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+											"});\r",
+											"pm.test(\"Response has message\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.have.property(\"message\");\r",
+											"});\r",
+											"pm.test(\"Response has correct message\", function () {\r",
+											"    const url = pm.request.url.toString();\r",
+											"    const match = url.match(/tasks\\/([\\w-]+)/);\r",
+											"    const taskId = match ? match[1] : null;\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(`Task with taskId ${taskId} not found.`);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/tasks/:taskId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"tasks",
+										":taskId"
+									],
+									"variable": [
+										{
+											"key": "taskId",
+											"value": "invalid-task-id"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Create and get task (Run collection)",
+			"item": [
+				{
+					"name": "Create task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+									"});\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"taskId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"status\");\r",
+									"    pm.expect(jsonData).to.have.property(\"price\");\r",
+									"});\r",
+									"pm.test(\"Status is pending\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"pending\");\r",
+									"});\r",
+									"pm.environment.set(\"taskId\", jsonData.taskId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"path\": \"/input/landscape.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const expectedTaskId = pm.environment.get(\"taskId\");\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"TaskId matches\", function () {\r",
+									"    pm.expect(jsonData.taskId).to.eql(expectedTaskId);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", 'application/json; charset=utf-8');\r",
+									"});\r",
+									"pm.test(\"Response has required fields\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"taskId\");\r",
+									"    pm.expect(jsonData).to.have.property(\"status\");\r",
+									"    pm.expect(jsonData).to.have.property(\"price\");\r",
+									"    pm.expect(jsonData).to.have.property(\"images\");\r",
+									"});\r",
+									"pm.test(\"Status is completed\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(\"completed\");\r",
+									"});\r",
+									"pm.test(\"Images array has 2 elements\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.images.length).to.eql(2);\r",
+									"});\r",
+									"pm.test(\"Images have correct format\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.images.forEach(image => {\r",
+									"        pm.expect(image).to.have.property(\"resolution\");\r",
+									"        pm.expect(image).to.have.property(\"path\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/tasks/{{taskId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tasks",
+								"{{taskId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
