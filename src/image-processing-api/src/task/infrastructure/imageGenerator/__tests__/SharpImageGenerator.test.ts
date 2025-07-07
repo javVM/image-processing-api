@@ -9,6 +9,7 @@ import sharp from "sharp";
 import axios from "axios";
 
 describe("SharpImageGenerator", () => {
+  const imageGenerator = new SharpImageGenerator();
   const imagePath = "/input/image.jpg";
   const fakeImageData = "fakeImageData";
 
@@ -17,7 +18,6 @@ describe("SharpImageGenerator", () => {
   });
 
   test("Generate images for local path", async () => {
-    const imageGenerator = new SharpImageGenerator();
     const fakeBuffer = Buffer.from(fakeImageData);
     const mockedReadFileSync = fs.readFileSync as jest.Mock;
     const mockedMkdirSync = fs.mkdirSync as jest.Mock;
@@ -44,7 +44,6 @@ describe("SharpImageGenerator", () => {
   });
 
   test("Throw ImageGenerationError if sharp fails", async () => {
-    const imageGenerator = new SharpImageGenerator();
     const mockedReadFileSync = fs.readFileSync as jest.Mock;
     const mockedSharp = sharp as unknown as jest.Mock;
     mockedReadFileSync.mockReturnValue(Buffer.from(fakeImageData));
