@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/index.js",
-    "populate": "ts-node ./populate/populate.ts",
     "dev": "ts-node ./src/index.ts",
+    "populate": "node dist/populate/populate.js",
+    "populate-dev": "ts-node ./populate/populate.ts",
     "test": "jest",
     "format": "prettier --write \"**/*.{ts,js,json}\"",
     "lint": "eslint . --ext .ts,.js"
