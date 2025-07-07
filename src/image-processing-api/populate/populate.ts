@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { TaskDocument, TaskModel } from "../src/task/infrastructure/database/mongo/TaskModel";
-import { ImageDocument, ImageModel } from "../src/task/infrastructure/database/mongo/ImageModel";
+import { TaskModel } from "../src/task/infrastructure/database/mongo/TaskModel";
+import { ImageModel } from "../src/task/infrastructure/database/mongo/ImageModel";
 import path from "path";
 
 export function loadDataFromFiles() {
