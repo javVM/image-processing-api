@@ -1,6 +1,73 @@
 # 🖼️ Image Processing API
 A RESTful API for generating images in multiple resolutions from a single source image.
 
+## 📦 Requirements
+* Node.js v18+
+* Docker & docker-compose
+
+## 🚀 Installation
+Clone the repository:
+```bash
+git clone https://github.com/javVM/image-processing-api.git
+cd image-processing-api
+```
+Install dependencies:
+```bash
+cd src/image-processing-api
+npm install
+```
+## 🛠️ Build the Project
+#### 🔧 Local Build
+```bash
+cd src/image-processing-api
+npm run build
+```
+#### 🐳 Docker Build
+Build the dist package:
+```bash
+cd src/image-processing-api
+npm run build
+```
+Then build the API Docker image:
+```bash
+docker build . -t image-processing-api
+```
+
+## ▶️ Start the Project
+#### 💻 Run Locally (API on Host, DB in Docker)
+Start MongoDB container:
+```bash
+cd scripts/deploy/local
+docker-compose up -d
+```
+#### 🐳 Run Fully in Docker
+Start MongoDB and API containers:
+```bash
+cd scripts/deploy/docker
+docker-compose up -d
+```
+
+## 🗃️ Populate the Database
+Ensure MongoDB is running, then run:
+```bash
+cd src/image-processing-api
+npm run populate
+```
+
+## ✅ Testing
+Run integration and unit tests:
+```bash
+cd src/image-processing-api
+npm run test
+```
+
+## ✨ Features
+- Generate images in multiple resolutions from one initial image (local path or url)
+- RESTful API with structured endpoints
+- MongoDB for storing data
+- Docker support for easy deployment
+- CLI to populate the database
+
 ## 📐 Architecture
 This project follows a Hexagonal Architecture pattern to ensure maintainability, testability, and scalability:
 
@@ -32,7 +99,6 @@ project-root/
         ├── src/
         └── test/
 ```
-
 #### 📂 Domain Layer
 The domain logic is organized as follows in order to ensure that it remains independent of infrastructure concerns:
 * **entities:** Contains core domain objects and their business logic
@@ -121,75 +187,75 @@ infrastructure/
 └── services/
     └── serviceContainer.ts         # Simple DI container to wire use cases, services, and repositories
 ```
-## 📦 Requirements
-* Node.js v18+
-* Docker & docker-compose
+#### 🗃️ Data Persistence (MongoDB)
+The application uses Mongoose to define and interact with MongoDB collections. The main entities stored are Task and Image, which reflect the domain structure with some additional metadata.
 
-## 🚀 Installation
-Clone the repository:
-```bash
-git clone https://github.com/javVM/image-processing-api.git
-cd image-processing-api
+**Task schema**
+```ts
+{
+  status: { type: String, enum: Object.values(Status), required: true },
+  price: { type: Number, required: true },
+  originalPath: { type: String, required: true },
+  images: { type: [{ type: Schema.Types.ObjectId, ref: "Image" }], default: [] }
+}
 ```
-Install dependencies:
-```bash
-cd src/image-processing-api
-npm install
+Fields:
+* **taskId:** Unique identifier used by the domain logic (not the default Mongo _id)
+* **price:** A numeric value constrained between 5 and 50
+* **originalPath:** Path of the original image
+* **status:** The current task state (pending, completed, or failed)
+* **images:** Array of ObjectIds that reference Image collection documents
+
+**Image schema**
+```ts
+{
+  path: { type: String, required: true },
+  resolution: { type: String, required: true },
+  md5: { type: String, required: true }
+}
 ```
-## 🛠️ Build the Project
-#### 🔧 Local Build
-```bash
-cd src/image-processing-api
-npm run build
-```
-#### 🐳 Docker Build
-Build the dist package:
-```bash
-cd src/image-processing-api
-npm run build
-```
-Then build the API Docker image:
-```bash
-docker build . -t image-processing-api
-```
-## ▶️ Start the Project
-#### 💻 Run Locally (API on Host, DB in Docker)
-Start MongoDB container:
-```bash
-cd scripts/deploy/local
-docker-compose up -d
-```
-#### 🐳 Run Fully in Docker
-Start MongoDB and API containers:
-```bash
-cd scripts/deploy/docker
-docker-compose up -d
-```
-## 🗃️ Populate the Database
-Ensure MongoDB is running, then run:
-```bash
-cd src/image-processing-api
-npm run populate
-```
-## ✅ Testing
-Run integration and unit tests:
-```bash
-cd src/image-processing-api
-npm run test
-```
-## ✨ Features
-- Generate images in multiple resolutions from one initial image (local path or url)
-- RESTful API with structured endpoints
-- MongoDB for storing data
-- Docker support for easy deployment
-- CLI to populate the database
+Fields:
+* **resolution:** Indicates the resolution (e.g., "800", "1024")
+* **md5:** Hash that identifies the newly created image
+* **path:** File path of the generated image containing the generated hash
+* **taskId:** Link back to the parent task
+
+## ⚙️ Technical Decisions
+#### 🧱 Hexagonal Architecture
+This project is built using the Hexagonal Architecture to enforce a strong separation of concerns and improve testability, scalability, and maintainability. This architecture allows the business logic to remain decoupled from implementation details like Express, MongoDB, or Docker.
+#### 🗂️ Project Modularity
+Each domain entity (e.g. Task, Image, ImagePath, Status) and application use case has its own folder and files, making the system modular and easier to navigate. Repositories follow interfaces defined in the domain and are implemented in the infrastructure.
+#### 🧪 Testing Strategy
+The project uses layered testing to ensure robustness:
+* Unit tests are located alongside domain, application and infrastructure layers (Each layer can be tested independently)
+* Integration tests are used to test infrastructure-level concerns and system behavior
+#### ⚙️ Indexing Strategy
+Only the default index on _id has been created in the MongoDB collections. This decision is based on the nature of the operations performed by the application (Most queries are direct lookups by _id).
+
+Additional indexing on other fields such as status or price was considered unnecessary because the read/write patterns do not involve filtering or sorting on those fields.
+
+Introducing more indexes would increase the overhead during writes and updates, as each index must be maintained—ultimately negatively impacting performance in a write-heavy or batch-processing environment like this one.
+#### 🐳 Docker & Environment Separation
+The application supports multiple environments using Docker Compose:
+* **Local development:** API runs on the host machine; MongoDB runs in a container
+* **Full Docker deployment:** Both API and MongoDB run in isolated containers for consistent behavior across systems
+This ensures the app can run reliably in different pipelines or OS environments.
+#### 📄 API Documentation (Swagger/OpenAPI)
+The API is fully documented using Swagger, auto-generated from JSDoc-style annotations. This provides:
+* Clear, interactive API reference
+* Schema validation and response structure transparency
+#### 🖼️ Image Generation with Sharp
+Image processing is handled using Sharp. Sharp was chosen for:
+* Native support for multiple image formats
+* Performance and memory efficiency
+* Fast image resizing
+Image files are stored in an organized output directory with path metadata saved in MongoDB for retrieval.
 
 ## 📚 API Documentation
 This project uses **Swagger (OpenAPI 3.0)** to provide interactive API documentation.
 You can access the full documentation at: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)  
 
 ### 🔗 Available Endpoints
-
 #### `POST /tasks`
 Creates a new image-processing task.
 
@@ -226,7 +292,7 @@ Creates a new image-processing task.
     { "message": "Failed to persist task data in database: connection timeout." }
     ```
 #### GET /tasks/{taskId}
-Retrieves details of an existing taskId
+Retrieves details of an existing task
 - **Path parameter** 
     * taskId (string): ID of the task to retrieve
 - **✅ Response (200 OK)**
@@ -249,6 +315,7 @@ Retrieves details of an existing taskId
     ```json
     { "message": "Failed to retrieve task with taskId 686a6e8ccb00ef45aea7d7c8 from database: connection timeout." }
     ```
+
 ## 📄 License
 This project is licensed under the MIT License.
 See the [LICENSE](LICENSE) file for details.
