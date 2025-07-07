@@ -11,11 +11,11 @@ const TEST_TIMEOUT_MS = 5000; // Max time before the test times out
 const WAIT_TIME_MS = 2000; // Time in ms to wait before trying to retrieve the created task's data
 
 beforeAll(async () => {
-  process.env.OUTPUT_DIR="test/output";
+  process.env.OUTPUT_DIR = "test/output";
   await connect();
   const images = require("../../../../test/data/images.json");
   const tasks = require("../../../../test/data/tasks.json");
-  await Promise.all([ImageModel.insertMany(images),TaskModel.insertMany(tasks)]);
+  await Promise.all([ImageModel.insertMany(images), TaskModel.insertMany(tasks)]);
 });
 
 afterAll(async () => {
@@ -141,7 +141,9 @@ describe("Create and get task", () => {
     expect(getResponse.body).not.toHaveProperty("images");
   });
 
-  it("Create and get FAILED task (local)", async () => {
+  it(
+    "Create and get FAILED task (local)",
+    async () => {
       const createResponse = await request(app)
         .post("/tasks")
         .send({ path: "/test/input/image_failed.png" })
@@ -171,7 +173,8 @@ describe("Create and get task", () => {
     TEST_TIMEOUT_MS
   );
 
-  it("Create and get COMPLETED task (local)",
+  it(
+    "Create and get COMPLETED task (local)",
     async () => {
       const createResponse = await request(app)
         .post("/tasks")
@@ -208,7 +211,7 @@ describe("Create and get task", () => {
     TEST_TIMEOUT_MS
   );
 
-    it("Create and get PENDING task (url)", async () => {
+  it("Create and get PENDING task (url)", async () => {
     const createResponse = await request(app)
       .post("/tasks")
       .send({ path: "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" })
@@ -234,7 +237,9 @@ describe("Create and get task", () => {
     expect(getResponse.body).not.toHaveProperty("images");
   });
 
-  it("Create and get FAILED task (url)", async () => {
+  it(
+    "Create and get FAILED task (url)",
+    async () => {
       const createResponse = await request(app)
         .post("/tasks")
         .send({ path: "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_random_image_1.png" })
@@ -264,7 +269,8 @@ describe("Create and get task", () => {
     TEST_TIMEOUT_MS
   );
 
-  it("Create and get COMPLETED task (url)",
+  it(
+    "Create and get COMPLETED task (url)",
     async () => {
       const createResponse = await request(app)
         .post("/tasks")
