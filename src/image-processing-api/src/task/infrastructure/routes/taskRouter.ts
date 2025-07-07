@@ -45,7 +45,7 @@ const TaskRouter = Router();
  *               InvalidFileExtension:
  *                 summary: Invalid file extension
  *                 value:
- *                   message: "File extension not allowed. Allowed extensions:.jpg, .jpeg, .png."
+ *                   message: "File extension not allowed. Allowed extensions:.jpg, .jpeg, .png, .webp, .svg, .gif."
  *       500:
  *         description: Internal server error
  *         content:
