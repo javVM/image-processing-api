@@ -1,8 +1,8 @@
 import { ImagePath } from "./ImagePath";
 
 export class Image {
-  path: ImagePath;
-  resolution: string;
+  readonly path: ImagePath;
+  readonly resolution: string;
 
   constructor(path: ImagePath, resolution: string) {
     this.path = path;

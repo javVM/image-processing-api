@@ -1,24 +1,8 @@
-import express from "express";
 import dotenv from "dotenv";
-import { TaskRouter } from "./task/infrastructure/routes/taskRouter";
+import app from "./app";
 import { connectToDatabase } from "./task/infrastructure/database/mongo/mongoConnection";
-import { errorHandler } from "./task/infrastructure/middlewares/errorHandler";
-import TaskSwaggerOptions from "./task/infrastructure/config/swagger";
-import swaggerUi from "swagger-ui-express";
-import swaggerJSDoc from "swagger-jsdoc";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV || "local"}` });
-
-const app = express();
-
-app.use(express.json());
-
-const swaggerSpec = swaggerJSDoc(TaskSwaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-app.use("/tasks", TaskRouter);
-
-app.use(errorHandler);
 
 async function bootstrap() {
   try {

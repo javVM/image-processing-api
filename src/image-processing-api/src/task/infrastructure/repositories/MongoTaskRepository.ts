@@ -10,7 +10,7 @@ import { TaskModel } from "../database/mongo/TaskModel";
 import * as _ from "lodash";
 import { TaskSaveError } from "../errors/TaskSaveError";
 import { TaskRetrievalError } from "../errors/TaskRetrievalError";
-import { TaskStatusUpdateError } from "../errors/TaskStatusUpdate";
+import { TaskStatusUpdateError } from "../errors/TaskStatusUpdateError";
 import { Types } from "mongoose";
 
 export class MongoTaskRepository implements TaskRepository {
